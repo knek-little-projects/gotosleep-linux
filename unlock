@@ -1,0 +1,29 @@
+#!/usr/bin/python3
+import datetime
+import os
+
+
+SUDO_FILE_PATH = "/etc/sudoers.d/x"
+SUDO_FILE_CONTENT = "x ALL=(ALL:ALL) NOPASSWD:ALL"
+SAFE_TIME_START = "07:00"
+SAFE_TIME_END = "18:00"
+
+
+def hhmm(date):
+    return "%02d:%02d" % (date.hour, date.minute)
+
+
+def unlock():
+    with open(SUDO_FILE_PATH, "w") as sudoers:
+        sudoers.write(SUDO_FILE_CONTENT)
+
+
+def is_safe_time():
+    return SAFE_TIME_START <= hhmm(datetime.datetime.now()) <= SAFE_TIME_END
+
+
+if is_safe_time():
+    unlock()
+    print("UNLOCKED")
+else:
+    print("FORBIDDEN")
