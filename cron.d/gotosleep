@@ -2,7 +2,5 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # m h dom mon dow user	command
-* 5-17 * * * root grep -q x /etc/sudoers.d/x || echo 'x ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/x
-* 18-22 * * * root pkill -KILL '^su$'; pkill -KILL '^sudo$'; test -f /etc/sudoers.d/x && ( unlink /etc/sudoers.d/x; /root/ipblock.sh );
-* 23,0-4   * * * root pm-suspend; pkill -KILL -ux
+*  *  * * * root  bash -c 'DISPLAY=:0 /usr/bin/python3 /root/smartlock/smartlock.py &>> /smartlock.log'
 #
