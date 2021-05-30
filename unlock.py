@@ -1,16 +1,13 @@
-#!/usr/bin/python3
-import datetime
+#!/usr/bin/env python3
+from datetime import datetime as Datetime
+from datetime import time as Time
 import os
 
 
 SUDO_FILE_PATH = "/etc/sudoers.d/x"
 SUDO_FILE_CONTENT = "x ALL=(ALL:ALL) NOPASSWD:ALL"
-SAFE_TIME_START = "07:00"
-SAFE_TIME_END = "18:00"
-
-
-def hhmm(date):
-    return "%02d:%02d" % (date.hour, date.minute)
+SAFE_TIME_START = Time(4, 0)
+SAFE_TIME_END = Time(18, 0)
 
 
 def unlock():
@@ -19,7 +16,7 @@ def unlock():
 
 
 def is_safe_time():
-    return SAFE_TIME_START <= hhmm(datetime.datetime.now()) <= SAFE_TIME_END
+    return SAFE_TIME_START <= Datetime.now().time() <= SAFE_TIME_END
 
 
 if is_safe_time():

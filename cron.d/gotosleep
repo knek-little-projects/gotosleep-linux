@@ -2,5 +2,5 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # m h dom mon dow user	command
-*  *  * * * root  bash -c 'DISPLAY=:0 /usr/bin/python3 /root/smartlock/smartlock.py &>> /smartlock.log'
+*  *  * * * root  bash -c 'for i in $(seq 60); do sleep 1; DISPLAY=:0 smartlock --config /etc/smartlock.yaml &>> /var/log/smartlock.log; done'
 #

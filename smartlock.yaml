@@ -1,0 +1,33 @@
+safe_time: '05:00'
+danger_time: '18:00'
+critical_time: '00:00'
+
+env:
+  user: x
+
+# lock_screen: |
+#   pgrep -uroot slock || for i in 0 $(seq 10)
+#   do 
+#     DISPLAY=:$i sudo -uroot slock
+#   done
+
+# unlock_screen: |
+#   pgrep -uroot slock && kill -KILL $(pgrep -uroot slock)
+
+remove_admin_rights: |
+  pkill -KILL '^su$'
+  pkill -KILL '^sudo$'
+  test -f /etc/sudoers.d/$user && unlink /etc/sudoers.d/$user
+
+restore_admin_rights: |
+  grep -q $user /etc/sudoers.d/$user || \
+  echo '$user ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/$user
+
+terminate: |
+  pkill -KILL -u$user
+
+date_fmt: '%d/%m/%Y %H:%M'
+
+disable_periods:
+- - 20/01/2001 10:00
+  - 02/12/2002 20:00
